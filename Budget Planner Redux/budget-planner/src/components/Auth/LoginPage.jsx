@@ -1,19 +1,17 @@
-import React, {Component} from 'react';
-import {Redirect} from 'react-router-dom';
+import React, { Component } from 'react';
 import NotificationSystem from 'react-notification-system';
-
+import { connect } from 'react-redux';
+import { loginAction, redirectAction } from '../../actions/actions';
 import Input from '../common/Input';
-import requestHandler from '../../api/remote';
 
-export default class LoginPage extends Component {
+class LoginPage extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
             email: '',
-            password: '',
-            redirect: false
+            password: ''
         };
 
         this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -28,23 +26,7 @@ export default class LoginPage extends Component {
     onSubmitHandler(e) {
         e.preventDefault();
 
-        requestHandler.login(this.state.email, this.state.password).then(res => {
-
-            if (res.success) {
-                this._addNotification(res.message, "success");
-                sessionStorage.setItem("authToken", res.token);
-                sessionStorage.setItem("user", res.user.name);
-                setTimeout(() => {
-                    this.setState({redirect: true});
-                }, 2000);
-            } else {
-                if (res.errors) {
-                    this._addNotification(res.errors, "errors");
-                } else {
-                    this._addNotification(res.message, "error");
-                }
-            }
-        })
+        this.props.loginUser(this.state.email, this.state.password);
     }
 
     _addNotification(singleMessage, status) {
@@ -54,7 +36,7 @@ export default class LoginPage extends Component {
                 this._notificationSystem.addNotification({
                     message: singleMessage,
                     level: 'error',
-                    autoDismiss: 0
+                    autoDismiss: 7
                 });
                 break;
             case 'errors':
@@ -63,7 +45,7 @@ export default class LoginPage extends Component {
                         title: message,
                         message: singleMessage[message],
                         level: 'error',
-                        autoDismiss: 0
+                        autoDismiss: 7
                     });
                 }
                 break;
@@ -80,13 +62,20 @@ export default class LoginPage extends Component {
         this._notificationSystem = this.refs.notificationSystem;
     }
 
-    render() {
+    componentWillReceiveProps(newProps) {
 
-        if (this.state.redirect) {
-            return (
-                <Redirect to="/yearly"/>
-            )
+        this._addNotification(newProps.nofificationMessage, newProps.nofificationType);
+
+        if (newProps.loginSuccess) {
+
+            setTimeout(() => {
+                this.props.redirect();
+                this.props.history.push('/yearly');
+            }, 2000);
         }
+    }
+
+    render() {
 
         return (
             <main>
@@ -102,21 +91,21 @@ export default class LoginPage extends Component {
                             <div className="col-md-3">
                                 <div className="form-group">
                                     <label className="form-control-label" htmlFor="email">E-mail</label>
-                                        <Input
-                                            type="text"
-                                            name="email"
-                                            value={this.state.email}
-                                            onChange={this.onChangeHandler}
-                                        />
+                                    <Input
+                                        type="text"
+                                        name="email"
+                                        value={this.state.email}
+                                        onChange={this.onChangeHandler}
+                                    />
                                 </div>
                                 <div className="form-group">
                                     <label className="form-control-label" htmlFor="password">Password</label>
-                                        <Input
-                                            name="password"
-                                            type="password"
-                                            value={this.state.password}
-                                            onChange={this.onChangeHandler}
-                                        />
+                                    <Input
+                                        name="password"
+                                        type="password"
+                                        value={this.state.password}
+                                        onChange={this.onChangeHandler}
+                                    />
                                 </div>
                                 <input type="submit" className="btn btn-secondary" value="Login"/>
                             </div>
@@ -127,3 +116,20 @@ export default class LoginPage extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        loginSuccess: state.login.success,
+        nofificationMessage: state.notify.message,
+        nofificationType: state.notify.errorType,
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loginUser: (email, password) => dispatch(loginAction(email, password)),
+        redirect: () => dispatch(redirectAction())
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

@@ -50,4 +50,33 @@ function registerAction(username, email, password) {
     };
 }
 
-export { loginSuccess, redirectAction, registerAction, notifications };
+function loginAction(email, password) {
+
+    return (dispatch) => {
+        requestHandler.login(email, password).then(res => {
+
+            if (res.success) {
+                // this._addNotification(res.message, "success");
+                // sessionStorage.setItem("authToken", res.token);
+                // sessionStorage.setItem("user", res.user.name);
+                // setTimeout(() => {
+                //     this.setState({redirect: true});
+                // }, 2000);
+                dispatch(notifications(res.message, "success"));
+                sessionStorage.setItem("authToken", res.token);
+                sessionStorage.setItem("user", res.user.name);
+                dispatch(loginSuccess());
+            } else {
+                if (res.errors) {
+
+                    dispatch(notifications(res.errors, "errors"));
+                } else {
+                    
+                    dispatch(notifications(res.message, "error"));
+                }
+            }
+        })
+    };
+}
+
+export { loginSuccess, redirectAction, registerAction, loginAction, notifications };

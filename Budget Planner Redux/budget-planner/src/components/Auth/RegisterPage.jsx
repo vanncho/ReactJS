@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import NotificationSystem from 'react-notification-system';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { registerAction, redirectAction } from '../../actions/actions';
 
 import Input from '../common/Input';

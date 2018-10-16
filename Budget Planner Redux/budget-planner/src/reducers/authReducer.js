@@ -22,14 +22,11 @@ export function loginReducer(state = initState, action) {
 
     switch (action.type) {
         case REGISTER_SUCCESS:
-            return {
-            };
+            return Object.assign({}, state, { success: true });
         case LOGIN_SUCCESS:
-            return {
-            };
+            return Object.assign({}, state, { success: true });
         case REDIRECT:
-            return {
-            };
+            return Object.assign({}, state, { success: false });
         default:
             return state;
     }
