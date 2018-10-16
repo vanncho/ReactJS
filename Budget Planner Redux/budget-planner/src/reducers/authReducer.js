@@ -4,29 +4,15 @@ const initState = {
     success: false
 }
 
-export function registerReducer(state = initState, action) {
+export function authReducer(state = initState, action) {
 
     switch (action.type) {
         case REGISTER_SUCCESS:
-            return Object.assign({}, state, { success: true });
+            return  { success: true };
         case LOGIN_SUCCESS:
-            return Object.assign({}, state, { success: false });
+            return  { success: true };
         case REDIRECT:
-            return Object.assign({}, state, { success: false });
-        default:
-            return state;
-    }
-}
-
-export function loginReducer(state = initState, action) {
-
-    switch (action.type) {
-        case REGISTER_SUCCESS:
-            return Object.assign({}, state, { success: true });
-        case LOGIN_SUCCESS:
-            return Object.assign({}, state, { success: true });
-        case REDIRECT:
-            return Object.assign({}, state, { success: false });
+            return  { success: false };
         default:
             return state;
     }

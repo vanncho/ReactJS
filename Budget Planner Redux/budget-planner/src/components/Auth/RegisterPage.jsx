@@ -142,7 +142,7 @@ class RegisterPage extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        registerSuccess: state.register.success,
+        registerSuccess: state.auth.success,
         nofificationMessage: state.notify.message,
         nofificationType: state.notify.errorType,
     };

@@ -56,12 +56,7 @@ function loginAction(email, password) {
         requestHandler.login(email, password).then(res => {
 
             if (res.success) {
-                // this._addNotification(res.message, "success");
-                // sessionStorage.setItem("authToken", res.token);
-                // sessionStorage.setItem("user", res.user.name);
-                // setTimeout(() => {
-                //     this.setState({redirect: true});
-                // }, 2000);
+
                 dispatch(notifications(res.message, "success"));
                 sessionStorage.setItem("authToken", res.token);
                 sessionStorage.setItem("user", res.user.name);

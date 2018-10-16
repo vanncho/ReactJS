@@ -1,8 +1,7 @@
-import { registerReducer, loginReducer } from './authReducer';
+import { authReducer } from './authReducer';
 import { notifications } from './notificationReducer';
 
 export default {
-    register: registerReducer,
-    login: loginReducer,
+    auth: authReducer,
     notify: notifications
 };

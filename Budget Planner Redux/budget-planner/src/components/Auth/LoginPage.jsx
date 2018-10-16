@@ -119,7 +119,7 @@ class LoginPage extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        loginSuccess: state.login.success,
+        loginSuccess: state.auth.success,
         nofificationMessage: state.notify.message,
         nofificationType: state.notify.errorType,
     };
