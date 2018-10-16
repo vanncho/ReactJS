@@ -1,21 +1,5 @@
-import { LOGIN_SUCCESS, REGISTER_SUCCESS, REDIRECT } from './actions';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const REDIRECT = 'REDIRECT';
 
-function loginSuccess() {
-    return {
-        type: LOGIN_SUCCESS
-    }
-}
-
-function registerSuccess() {
-    return {
-        type: REGISTER_SUCCESS
-    }
-}
-
-function redirect() {
-    return {
-        type: REDIRECT
-    }
-}
-
-export { loginSuccess, registerSuccess, redirect };
+export const NOTIFICATION = 'NOTIFICATION';

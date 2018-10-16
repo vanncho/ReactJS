@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {Redirect} from 'react-router-dom';
 import NotificationSystem from 'react-notification-system';
+import {connect} from 'react-redux';
+import { registerAction, redirectAction } from '../../actions/actions';
 
 import Input from '../common/Input';
-import requestHandler from '../../api/remote';
 
-export default class RegisterPage extends Component {
+class RegisterPage extends Component {
 
     constructor(props) {
         super(props);
@@ -14,8 +14,7 @@ export default class RegisterPage extends Component {
             username: '',
             email: '',
             password: '',
-            repeat: '',
-            redirect: false
+            repeat: ''
         };
 
         this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -34,22 +33,7 @@ export default class RegisterPage extends Component {
             this._addNotification('Passwords not match.', "error");
         }
 
-        requestHandler.register(this.state.username, this.state.email, this.state.password).then(res => {
-
-            if (res.success) {
-                this._addNotification(res.message, "success");
-                setTimeout(() => {
-                    this.setState({redirect: true});
-                }, 2000);
-
-            } else {
-                if (res.errors) {
-                    this._addNotification(res.errors, "errors");
-                } else {
-                    this._addNotification(res.message, "error");
-                }
-            }
-        })
+        this.props.registerUser(this.state.username, this.state.email, this.state.password);
     }
 
     _addNotification(singleMessage, status) {
@@ -59,7 +43,7 @@ export default class RegisterPage extends Component {
                 this._notificationSystem.addNotification({
                     message: singleMessage,
                     level: 'error',
-                    autoDismiss: 0
+                    autoDismiss: 7
                 });
                 break;
             case 'errors':
@@ -68,7 +52,7 @@ export default class RegisterPage extends Component {
                         title: message,
                         message: singleMessage[message],
                         level: 'error',
-                        autoDismiss: 0
+                        autoDismiss: 7
                     });
                 }
                 break;
@@ -85,13 +69,20 @@ export default class RegisterPage extends Component {
         this._notificationSystem = this.refs.notificationSystem;
     }
 
-    render() {
+    componentWillReceiveProps(newProps) {
 
-        if (this.state.redirect) {
-            return (
-                <Redirect to="/login"/>
-            )
+        this._addNotification(newProps.nofificationMessage, newProps.nofificationType);
+
+        if (newProps.registerSuccess) {
+
+             setTimeout(() => {
+                this.props.redirect();
+                this.props.history.push('/login');
+            }, 2000);
         }
+    }
+
+    render() {
 
         return (
             <main>
@@ -107,28 +98,28 @@ export default class RegisterPage extends Component {
                             <div className="col-md-3">
                                 <div className="form-group">
                                     <label className="form-control-label " htmlFor="username">Username</label>
-                                        <Input
-                                            name="username"
-                                            value={this.state.username}
-                                            onChange={this.onChangeHandler}
-                                        />
+                                    <Input
+                                        name="username"
+                                        value={this.state.username}
+                                        onChange={this.onChangeHandler}
+                                    />
                                 </div>
                                 <div className="form-group has-success">
                                     <label className="form-control-label" htmlFor="email">E-mail</label>
-                                        <Input
-                                            name="email"
-                                            value={this.state.email}
-                                            onChange={this.onChangeHandler}
-                                        />
+                                    <Input
+                                        name="email"
+                                        value={this.state.email}
+                                        onChange={this.onChangeHandler}
+                                    />
                                 </div>
                                 <div className="form-group has-danger">
                                     <label className="form-control-label" htmlFor="new-password">Password</label>
-                                        <Input
-                                            name="password"
-                                            type="password"
-                                            value={this.state.password}
-                                            onChange={this.onChangeHandler}
-                                        />
+                                    <Input
+                                        name="password"
+                                        type="password"
+                                        value={this.state.password}
+                                        onChange={this.onChangeHandler}
+                                    />
                                 </div>
                                 <div className="form-group has-danger">
                                     <label className="form-control-label" htmlFor="repeat">Repeat password</label>
@@ -148,3 +139,20 @@ export default class RegisterPage extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        registerSuccess: state.register.success,
+        nofificationMessage: state.notify.message,
+        nofificationType: state.notify.errorType,
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        registerUser: (username, email, password) => dispatch(registerAction(username, email, password)),
+        redirect: () => dispatch(redirectAction()),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);
