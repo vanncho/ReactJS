@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { BrowserRouter, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import requestHandler from '../../api/remote';
 import Balance from "./Balance";
@@ -25,8 +25,6 @@ class BalanceLists extends Component {
         let currentTime = new Date();
         let thisYear = (currentTime.getFullYear());
         this.setState({thisYear: thisYear});
-        let nextYear = (currentTime.getFullYear()) + 1;
-        let currMonth = currentTime.getMonth() + 1;
 
         if (sessionStorage.getItem('authToken')) {
 

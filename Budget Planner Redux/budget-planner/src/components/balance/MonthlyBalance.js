@@ -98,6 +98,7 @@ class MonthlyBalance extends Component {
                     level: 'success',
                 });
                 break;
+            default: break;
         }
     }
 
@@ -182,9 +183,9 @@ class MonthlyBalance extends Component {
                                                             <td>{b.name}</td>
                                                             <td>{b.category}</td>
                                                             <td>{b.amount}</td>
-                                                            <td>{b.date}-{this.getMonthByIndex(Number(this.props.match.params.month))}-{this.props.match.params.year}</td>
+                                                            <td>{b.date}-{monthUtility.getMonthByIndex(Number(this.props.match.params.month))}-{this.props.match.params.year}</td>
                                                             <td>
-                                                                <a className="btn btn-secondary" href="javascript:void(0)" onClick={(() => this.deleteExpense(b.id))}>Delete</a>
+                                                                <button className="btn btn-secondary" onClick={(() => this.deleteExpense(b.id))}>Delete</button>
                                                             </td>
                                                         </tr>
                                                     })}

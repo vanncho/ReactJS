@@ -55,6 +55,7 @@ class LoginPage extends Component {
                     level: 'success',
                 });
                 break;
+            default: break;
         }
     }
 
@@ -73,7 +74,7 @@ class LoginPage extends Component {
                 this.props.history.push('/yearly');
             }, 2000);
 
-        } else if (!newProps.loginSuccess && newProps.nofificationType === 'error' || newProps.nofificationType === 'errors') {
+        } else if (!newProps.loginSuccess && (newProps.nofificationType === 'error' || newProps.nofificationType === 'errors')) {
             this._addNotification(newProps.nofificationMessage, newProps.nofificationType);
         }
     }

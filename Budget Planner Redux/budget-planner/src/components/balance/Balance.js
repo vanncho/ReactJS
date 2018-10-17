@@ -4,10 +4,6 @@ import monthUtility from '../../utils/monthUtility';
 
 export default class Balance extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className="col-md-3">

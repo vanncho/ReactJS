@@ -17,6 +17,7 @@ const monthUtility = {
             case 10: month = 'October'; break;
             case 11: month = 'November'; break;
             case 12: month = 'December'; break;
+            default: break;
         }
     
         return month;

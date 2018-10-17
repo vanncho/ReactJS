@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
-import {Redirect} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import NotificationSystem from 'react-notification-system';
 
 import Input from '../common/Input';
 import requestHandler from '../../api/remote';
+import monthUtility from '../../utils/monthUtility';
 
 export default class AddExpenses extends Component {
 
@@ -21,7 +22,6 @@ export default class AddExpenses extends Component {
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this._addNotification = this._addNotification.bind(this);
-        this.getMonthByIndex = this.getMonthByIndex.bind(this);
     }
 
     onChangeHandler(e) {
@@ -83,33 +83,12 @@ export default class AddExpenses extends Component {
                     level: 'success',
                 });
                 break;
+            default: break;
         }
     }
 
     componentDidMount() {
         this._notificationSystem = this.refs.notificationSystem;
-    }
-
-    getMonthByIndex(index) {
-
-        let month = '';
-
-        switch (index) {
-            case 1: month = 'January'; break;
-            case 2: month = 'February'; break;
-            case 3: month = 'March'; break;
-            case 4: month = 'April'; break;
-            case 5: month = 'May'; break;
-            case 6: month = 'June'; break;
-            case 7: month = 'July'; break;
-            case 8: month = 'August'; break;
-            case 9: month = 'September'; break;
-            case 10: month = 'October'; break;
-            case 11: month = 'November'; break;
-            case 12: month = 'December'; break;
-        }
-
-        return month;
     }
 
     render() {
@@ -128,7 +107,7 @@ export default class AddExpenses extends Component {
                     <div className="row space-top">
                         <div className="col-md-12">
                             <h1>Add Expenses</h1>
-                            <h3>{this.getMonthByIndex(Number(this.props.match.params.month))} {this.props.match.params.year}</h3>
+                            <h3>{monthUtility.getMonthByIndex(Number(this.props.match.params.month))} {this.props.match.params.year}</h3>
                         </div>
                     </div>
                     <div className="row space-top">

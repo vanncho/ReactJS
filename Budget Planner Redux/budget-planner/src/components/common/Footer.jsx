@@ -19,7 +19,7 @@ export default class Footer extends Component {
     getCurrentYear() {
         let date = new Date();
         let currYear = date.getFullYear();
-        this.setState({['year']: currYear});
+        this.setState({year: currYear});
     }
 
     render() {

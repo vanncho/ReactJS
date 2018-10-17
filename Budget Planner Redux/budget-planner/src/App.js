@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, withRouter, NavLink } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 
 import Header from './components/common/Header';
 import RegisterPage from './components/Auth/RegisterPage';

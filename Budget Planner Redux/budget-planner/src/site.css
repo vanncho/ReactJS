@@ -1,14 +1,26 @@
-a.nav-link {
+a.nav-link,
+.logout {
     display: inline-block;
     color: rgb(255, 255, 255, 0.75);
 }
 
-a.nav-link:hover {
+a.nav-link:hover,
+.logout:hover {
+    color: white;
+    text-decoration: none;
+}
+
+a.nav-link.active,
+.logout.active {
     color: white;
 }
 
-a.nav-link.active {
-    color: white;
+.logout {
+    cursor: pointer;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.1);
+    -webkit-transition: color ease-in-out .2s;
+    -o-transition: color ease-in-out .2s;
+    transition: color ease-in-out .2s;
 }
 
 .space-top {

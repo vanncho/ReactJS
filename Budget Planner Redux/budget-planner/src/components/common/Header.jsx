@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {NavLink} from 'react-router-dom';
+import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 
 export default class Header extends Component {
 
@@ -8,8 +8,6 @@ export default class Header extends Component {
         let currentTime = new Date();
         let thisYear = (currentTime.getFullYear());
         this.setState({thisYear: thisYear});
-        let nextYear = (currentTime.getFullYear()) + 1;
-        let currMonth = currentTime.getMonth() + 1;
     }
 
     render() {
@@ -23,7 +21,7 @@ export default class Header extends Component {
                             <div className="col-md-12">
                                 <NavLink exact className="nav-link" to={`/monthly/${((new Date()).getFullYear())}/${((new Date()).getMonth())}`}>Monthly Balance</NavLink>
                                 <NavLink exact to="/yearly" className="nav-link">Yearly Balance</NavLink>
-                                {loggedIn && <a className="nav-link" href="javascript:void(0)" onClick={onLogout}>Logout</a>}
+                                {loggedIn && <button type="button" className="btn btn-link logout" onClick={onLogout}>Logout</button>}
                                 {!loggedIn && <NavLink to="/login" className="nav-link">Login</NavLink>}
                                 {!loggedIn && <NavLink to="/register" className="nav-link">Register</NavLink>}
                             </div>
