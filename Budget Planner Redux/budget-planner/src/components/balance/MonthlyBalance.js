@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
-import { Link, BrowserRouter, withRouter } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 
 import Input from '../common/Input';
 import requestHandler from '../../api/remote';
 import NotificationSystem from 'react-notification-system';
+import monthUtility from '../../utils/monthUtility';
 
 class MonthlyBalance extends Component {
 
@@ -19,7 +20,6 @@ class MonthlyBalance extends Component {
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this._addNotification = this._addNotification.bind(this);
-        this.getMonthByIndex = this.getMonthByIndex.bind(this);
         this.getMonthlyBalance = this.getMonthlyBalance.bind(this);
         this.deleteExpense = this.deleteExpense.bind(this);
     }
@@ -58,7 +58,7 @@ class MonthlyBalance extends Component {
         };
 
         requestHandler.updateMonthlyBalance(this.props.match.params.year, this.props.match.params.month, balance).then(res => {
-            console.log(res);
+
             if (res.success) {
                 this._addNotification(res.message, "success");
                 this.getMonthlyBalance();
@@ -79,7 +79,7 @@ class MonthlyBalance extends Component {
                 this._notificationSystem.addNotification({
                     message: singleMessage,
                     level: 'error',
-                    autoDismiss: 0
+                    autoDismiss: 7
                 });
                 break;
             case 'errors':
@@ -88,7 +88,7 @@ class MonthlyBalance extends Component {
                         title: message,
                         message: singleMessage[message],
                         level: 'error',
-                        autoDismiss: 0
+                        autoDismiss: 7
                     });
                 }
                 break;
@@ -99,28 +99,6 @@ class MonthlyBalance extends Component {
                 });
                 break;
         }
-    }
-
-    getMonthByIndex(index) {
-
-        let month = '';
-
-        switch (index) {
-            case 1: month = 'January'; break;
-            case 2: month = 'February'; break;
-            case 3: month = 'March'; break;
-            case 4: month = 'April'; break;
-            case 5: month = 'May'; break;
-            case 6: month = 'June'; break;
-            case 7: month = 'July'; break;
-            case 8: month = 'August'; break;
-            case 9: month = 'September'; break;
-            case 10: month = 'October'; break;
-            case 11: month = 'November'; break;
-            case 12: month = 'December'; break;
-        }
-
-        return month;
     }
 
     deleteExpense(expenseId) {
@@ -155,7 +133,7 @@ class MonthlyBalance extends Component {
                             <div className="card bg-secondary">
                                 <div className="card-body">
                                     <blockquote className="card-blockquote">
-                                        <h2 id="month">{this.getMonthByIndex(Number(this.props.match.params.month))} {this.props.match.params.year}</h2>
+                                        <h2 id="month">{monthUtility.getMonthByIndex(Number(this.props.match.params.month))} {this.props.match.params.year}</h2>
                                         <div className="row">
                                             <div className="col-md-3 space-top">
                                                 <h4>Planner</h4>
