@@ -71,14 +71,16 @@ class RegisterPage extends Component {
 
     componentWillReceiveProps(newProps) {
 
-        this._addNotification(newProps.nofificationMessage, newProps.nofificationType);
+        if (newProps.registerSuccess && newProps.nofificationType === 'success') {
 
-        if (newProps.registerSuccess) {
+            this._addNotification(newProps.nofificationMessage, newProps.nofificationType);
 
-             setTimeout(() => {
+            setTimeout(() => {
                 this.props.redirect();
                 this.props.history.push('/login');
             }, 2000);
+        } else if (!newProps.registerSuccess && newProps.nofificationType === 'error' || newProps.nofificationType === 'errors') {
+            this._addNotification(newProps.nofificationMessage, newProps.nofificationType);
         }
     }
 

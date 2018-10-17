@@ -64,14 +64,17 @@ class LoginPage extends Component {
 
     componentWillReceiveProps(newProps) {
 
-        this._addNotification(newProps.nofificationMessage, newProps.nofificationType);
+        if (newProps.loginSuccess && newProps.nofificationType === 'success') {
 
-        if (newProps.loginSuccess) {
+            this._addNotification(newProps.nofificationMessage, newProps.nofificationType);
 
             setTimeout(() => {
                 this.props.redirect();
                 this.props.history.push('/yearly');
             }, 2000);
+
+        } else if (!newProps.loginSuccess && newProps.nofificationType === 'error' || newProps.nofificationType === 'errors') {
+            this._addNotification(newProps.nofificationMessage, newProps.nofificationType);
         }
     }
 
