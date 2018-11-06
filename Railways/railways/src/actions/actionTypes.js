@@ -1,0 +1,1 @@
+export const GET_TRAINS = 'GET_TRAINS';
