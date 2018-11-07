@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const CatalogUnit = (props) => {
 
     return(
-        <Link to="" className="added-train">
+        <Link to={'/trips/' + props.train._id} className="added-train" >
             <img src={trainStationImg} alt="" className="picture-added-train" />
             <h3>{props.train.destination}</h3>
             <span>from {props.train.origin}</span>

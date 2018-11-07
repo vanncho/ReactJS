@@ -1,5 +1,7 @@
 import { catalogReducer } from './catalogReducer';
+import { dateReducer } from './dateReducer';
 
 export default {
-    catalog: catalogReducer
+    catalog: catalogReducer,
+    date: dateReducer
 }

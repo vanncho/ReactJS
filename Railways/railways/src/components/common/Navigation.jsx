@@ -1,28 +1,34 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import cartImage from '../../static/img/cart.png';
+import authentication from '../../api/authentication.js';
 
 class Navigation extends Component {
 
     render() {
 
-        const name = sessionStorage.getItem('username');
-        const token = sessionStorage.getItem('token');
+        const isLoggedIn = authentication.isAuthenticated();
+        const name = authentication.getAuthName();
 
         return(
             <nav className="nav-register">
                 <div className="left-container">
                     <ul>
-                        <li><Link to="/catalog">Trains</Link></li>
-                        <li><Link to="/login">Login</Link></li>
-                        <li><Link to="/register">Register</Link></li>
+                        <li><Link to="/">Trains</Link></li>
+                        { !isLoggedIn &&
+                            <span>
+                                <li><Link to="/login">Login</Link></li>
+                                <li><Link to="/register">Register</Link></li>
+                            </span>
+                        }
+                        { isLoggedIn && <li><Link to="/myTickets">My Tickets</Link></li>}
                     </ul>
                 </div>
-                { name && token &&
+                { isLoggedIn &&
                     <div className="right-container">
-                        <span>Welcome, {name} |</span>
+                        <span>Welcome, {name}</span>
                         <Link to="" className="log-out" onClick={this.props.logout}>Logout</Link>
-                        <Link to="/addCart"><img src={cartImage} alt="cart" className="cart" /></Link>
+                        <Link to="/cart"><img src={cartImage} alt="cart" className="cart" /></Link>
                     </div>
                 }
             </nav>
