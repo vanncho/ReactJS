@@ -13,29 +13,59 @@ class CatalogUnitDetails extends Component {
         this.state = {
             train: {},
             date: '',
-            class: '',
-            count: '',
+            classF: '',
+            countF: 0,
+            classS: '',
+            countS: 0,
         }
     }
 
     onChangeHandler(event) {
-        this.setState({ class: event.target.name });
-        this.setState({ count: event.target.value });
+
+        switch (event.target.name) {
+
+            case 'firstClass': 
+                this.setState({ classF: event.target.name });
+                this.setState({ countF: Number(event.target.value) });
+            break;
+            case 'secondClass':
+                this.setState({ classS: event.target.name });
+                this.setState({ countS: Number(event.target.value) });
+            break;
+            default: break;
+        }
     }
 
-    processRequest(event) {
+    processRequest(event, classType) {
         event.preventDefault();
 
         const bodyObj = {
             "tripId": this.props.match.params.id,
             "date": this.state.date,
-            "class": this.state.class,
-            "count": this.state.count
         };
 
-        requestHandler.addTicketsToCart(bodyObj).then(res => {
-            toastr.success(res.message);
-        });
+        switch (classType) {
+
+            case 'first': 
+                bodyObj.class = this.state.classF;
+                bodyObj.count = this.state.countF;
+            break;
+            case 'second':
+                bodyObj.class = this.state.classS;
+                bodyObj.count = this.state.countS;
+            break;
+            default: break;
+        }
+
+        if (bodyObj.count > 0) {
+
+            requestHandler.addTicketsToCart(bodyObj).then(res => {
+                toastr.success(res.message);
+            });
+
+        } else {
+            toastr.error('Please provide number of tickets!');
+        }
     }
 
     componentDidMount() {
@@ -94,7 +124,7 @@ class CatalogUnitDetails extends Component {
                                     type="submit"
                                     className="create-seat"
                                     value="Add to Cart"
-                                    onClick={this.processRequest.bind(this)}
+                                    onClick={(e, type = 'first') => this.processRequest(e, type)}
                                 />
                                 <button className="delete" onClick={(e) => { e.preventDefault(); return e.target.previousSibling.previousSibling.value = ''}}>X</button>
                             </form>
@@ -113,7 +143,7 @@ class CatalogUnitDetails extends Component {
                                 type="submit"
                                 className="create-seat"
                                 value="Add to Cart"
-                                onClick={this.processRequest.bind(this)}
+                                onClick={(e, type = 'second') => this.processRequest(e, type)}
                             />
                             <button className="delete" onClick={(e) => { e.preventDefault(); return e.target.previousSibling.previousSibling.value = ''}}>X</button>
                         </form>
