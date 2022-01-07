@@ -1,9 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { storeSelectedUsers } from '../../store/actions/usersAction';
-
-import { getUsers } from '../../api/userRemote';
+import React from 'react';
 
 import Search from '../search/Search';
 import Users from '../user/users/Users';
