@@ -1,21 +1,14 @@
-import { useState } from 'react';
+import { useRef } from 'react';
 
 export const useLogic = (onSearch) => {
-  const [search, setSearch] = useState('');
-
-  const handleOnChange = event => {
-    const value = event.target.value;
-
-    setSearch(value);
-  };
+  const searchRef = useRef('');
 
   const handleSearch = () => {
-    onSearch(search);
+    onSearch(searchRef.current.value);
   };
 
   return {
-    search,
-    handleOnChange,
+    searchRef,
     handleSearch,
   };
 };

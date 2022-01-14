@@ -4,7 +4,7 @@ import { useLogic } from './hooks/useLogic';
 
 const Search = (props) => {
   const { onSearch } = props;
-  const { search, handleOnChange, handleSearch } = useLogic(onSearch);
+  const { searchRef, handleSearch } = useLogic(onSearch);
 
   console.log('<Search />');
 
@@ -12,10 +12,10 @@ const Search = (props) => {
     <div className="form-container">
       <div className="input-group mb-3">
         <input
+          ref={searchRef}
+          type="text"
           className="form-control"
           placeholder="enter user name or id"
-          value={search}
-          onChange={handleOnChange}
         />
         <div className="input-group-append">
           <button className="btn btn-outline-secondary" type="button" onClick={handleSearch}>Search</button>
