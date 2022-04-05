@@ -1,0 +1,17 @@
+.row-content {
+  padding: 5px 20px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inline {
+  display: inline;
+  margin-bottom: 0;
+}
+
+.user-text {
+  color: #000;
+}

@@ -1,0 +1,80 @@
+.modal-fade-in {
+  animation: fadeIn 2s;
+  position: fixed;
+  left: 0;
+  top: -300px;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translate3d(0, -20%, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+.modal-fade-out {
+  animation: fadeOut 2s;
+  position: fixed;
+  left: 0;
+  top: -300px;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+@keyframes fadeOut {
+  from {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+	to {
+		opacity: 0;
+		transform: translate3d(0, -20%, 0);
+	}
+}
+
+.modal-content {
+  width: 600px;
+  background-color: #fff;
+}
+
+.modal-header {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  margin: 0;
+}
+
+.modal-body {
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-close-btn {
+  font-weight: bold;
+  border: none;
+  background-color: unset;
+}
+
+.modal-close-btn:hover {
+  cursor: pointer;
+}
